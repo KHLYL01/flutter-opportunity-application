@@ -7,13 +7,15 @@ class CustomFillButton extends StatelessWidget {
     Key? key,
     required this.width,
     required this.text,
-    required this.icon,
+    this.icon,
     this.onPressed,
+    this.textFont = 16,
   }) : super(key: key);
 
   final double width;
   final String text;
-  final IconData icon;
+  final double textFont;
+  final IconData? icon;
   final VoidCallback? onPressed;
 
   @override
@@ -34,16 +36,17 @@ class CustomFillButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              icon,
-              size: 20,
-              color: AppColors.verLightBlue,
-            ),
-            const SizedBox(width: 5),
+            if (icon != null)
+              Icon(
+                icon,
+                size: 20,
+                color: AppColors.verLightBlue,
+              ),
+            if (icon != null) const SizedBox(width: 5),
             Text(
               text,
-              style: const TextStyle(
-                fontSize: 16,
+              style: TextStyle(
+                fontSize: textFont,
                 color: AppColors.verLightBlue,
               ),
             ),

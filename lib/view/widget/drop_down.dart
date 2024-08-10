@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:opportunity_app/controller/drop_down_controller.dart';
+import 'package:opportunity_app/controller/shared/drop_down_controller.dart';
 import '../../core/constants/app_colors.dart';
 
 class CustomDropDown extends StatelessWidget {
@@ -17,7 +17,8 @@ class CustomDropDown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DropDownController controller = DropDownController(list, currentSelected);
+    DropDownController controller =
+        Get.put(DropDownController(list, currentSelected), tag: title);
     return SizedBox(
       width: context.width,
       child: Column(

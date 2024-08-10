@@ -61,7 +61,7 @@ class WelcomePage extends StatelessWidget {
               width: context.width * 0.3,
               text: 'Login',
               icon: Icons.email_outlined,
-              onPressed: () {},
+              onPressed: () => Get.toNamed(AppRoutes.loginPage),
             ).paddingOnly(bottom: 20),
             CustomOutlineButton(
               width: context.width * 0.315,
