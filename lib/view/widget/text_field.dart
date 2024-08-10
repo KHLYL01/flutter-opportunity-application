@@ -43,6 +43,7 @@ class CustomTextField extends StatelessWidget {
               ),
             ).paddingOnly(bottom: 10),
             TextFormField(
+              controller: textEditingController,
               obscureText: isSecret ? controller.obscure : false,
               decoration: InputDecoration(
                 hintText: hint,

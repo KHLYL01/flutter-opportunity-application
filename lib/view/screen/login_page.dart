@@ -2,13 +2,15 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:opportunity_app/controller/login_controller.dart';
+import 'package:opportunity_app/controller/auth/login_controller.dart';
 import 'package:opportunity_app/core/extensions/widget_extension.dart';
 
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_images.dart';
 import '../../core/enums/input_status.dart';
+import '../../core/enums/status_request.dart';
 import '../../core/functions/validate_input.dart';
+import '../widget/custom_loading.dart';
 import '../widget/fill_button.dart';
 import '../widget/text_field.dart';
 
@@ -100,6 +102,11 @@ class LoginPage extends StatelessWidget {
                 )
               ],
             ).paddingSymmetric(horizontal: 16),
+          ),
+          Obx(
+            () => controller.statusRequest.value == StatusRequest.loading
+                ? const CustomLoading()
+                : Container(),
           ),
         ],
       ),

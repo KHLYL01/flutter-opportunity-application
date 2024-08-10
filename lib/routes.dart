@@ -1,6 +1,10 @@
 import 'package:get/get.dart';
+import 'package:opportunity_app/bindings/refresh_token_bindings.dart';
 import 'package:opportunity_app/bindings/register_bindings.dart';
+import 'package:opportunity_app/core/middleware/middleware.dart';
+import 'package:opportunity_app/view/screen/home_page.dart';
 import 'package:opportunity_app/view/screen/login_page.dart';
+import 'package:opportunity_app/view/screen/refresh_token_page.dart';
 
 import 'bindings/login_bindings.dart';
 import 'bindings/splash_bindings.dart';
@@ -19,6 +23,7 @@ List<GetPage<dynamic>> routes = [
   GetPage(
     name: AppRoutes.welcomePage,
     page: () => const WelcomePage(),
+    middlewares: [MyMiddleware()],
   ),
 
   GetPage(
@@ -30,5 +35,14 @@ List<GetPage<dynamic>> routes = [
     name: AppRoutes.loginPage,
     page: () => const LoginPage(),
     binding: LoginBindings(),
+  ),
+  GetPage(
+    name: AppRoutes.refreshPage,
+    page: () => const RefreshTokenPage(),
+    binding: RefreshTokenBindings(),
+  ),
+  GetPage(
+    name: AppRoutes.homePage,
+    page: () => const HomePage(),
   ),
 ];

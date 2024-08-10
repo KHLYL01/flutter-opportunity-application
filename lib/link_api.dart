@@ -1,7 +1,6 @@
 class AppLink {
   //real phone
-  static const String baseUrl = 'http://91.205.105.43:8080/api/v1';
-  // static const String baseUrl = 'http://192.168.1.6:8080/api/v1';
+  static const String baseUrl = 'http://192.168.1.6:8080/api/v1';
   //emulator
   // static const String baseUrl = 'http://10.0.2.2:8080/api/v1';
 
@@ -10,9 +9,6 @@ class AppLink {
   static const String register = '$baseAuth/register';
   static const String login = '$baseAuth/login';
   static const String refreshToken = '$baseAuth/refresh';
-  static const String verification = '$baseAuth/verification';
-  static const String reSendCode = '$baseAuth/code';
-  static const String changePassword = '$baseAuth/change';
 
   // ======================= User & Admin ==========================
 

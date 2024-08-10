@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
-import 'package:opportunity_app/controller/login_controller.dart';
-import 'package:opportunity_app/controller/register_controller.dart';
+import 'package:opportunity_app/controller/auth/login_controller.dart';
 
 class LoginBindings extends Bindings {
   @override

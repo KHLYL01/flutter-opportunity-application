@@ -2,14 +2,16 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:opportunity_app/controller/register_controller.dart';
+import 'package:opportunity_app/controller/auth/register_controller.dart';
 import 'package:opportunity_app/core/enums/input_status.dart';
 import 'package:opportunity_app/core/functions/validate_input.dart';
 import 'package:opportunity_app/view/widget/fill_button.dart';
 
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_images.dart';
+import '../../core/enums/status_request.dart';
 import '../../core/extensions/widget_extension.dart';
+import '../widget/custom_loading.dart';
 import '../widget/drop_down.dart';
 import '../widget/text_field.dart';
 
@@ -145,6 +147,11 @@ class RegisterPage extends StatelessWidget {
                 )
               ],
             ).paddingSymmetric(horizontal: 16),
+          ),
+          Obx(
+            () => controller.statusRequest.value == StatusRequest.loading
+                ? const CustomLoading()
+                : Container(),
           ),
         ],
       ),
