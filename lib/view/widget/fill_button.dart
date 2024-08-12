@@ -10,10 +10,12 @@ class CustomFillButton extends StatelessWidget {
     this.icon,
     this.onPressed,
     this.textFont = 16,
+    this.fillColor = AppColors.myDarkBlue,
   }) : super(key: key);
 
   final double width;
   final String text;
+  final Color fillColor;
   final double textFont;
   final IconData? icon;
   final VoidCallback? onPressed;
@@ -24,7 +26,7 @@ class CustomFillButton extends StatelessWidget {
       width: width,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.myDarkBlue,
+          backgroundColor: fillColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
           ),

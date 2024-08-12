@@ -7,7 +7,7 @@ import 'package:opportunity_app/core/extensions/widget_extension.dart';
 import 'package:opportunity_app/view/widget/fill_button.dart';
 import 'package:opportunity_app/view/widget/outline_button.dart';
 
-import '../../core/constants/app_colors.dart';
+import '../../../core/constants/app_colors.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
