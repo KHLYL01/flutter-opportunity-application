@@ -3,9 +3,10 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:opportunity_app/core/extensions/widget_extension.dart';
+import 'package:opportunity_app/view/widget/outline_button.dart';
 
+import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_routes.dart';
-import '../widget/attached_file_card.dart';
 import '../widget/job_card.dart';
 
 class UserProfilePage extends StatelessWidget {
@@ -13,103 +14,130 @@ class UserProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(
-            Icons.arrow_back,
-            size: 25,
-            color: Colors.black,
-          ),
-        ),
+        title: const Text("User Profile"),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () => Get.toNamed(AppRoutes.userUpdateProfilePage),
+            icon: const Icon(
+              Icons.edit,
+              size: 24,
+            ),
+          ).paddingOnly(right: 5)
+        ],
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-          child: Column(
-            children: [
-              _buildFirstSectionOfProfile(),
-              const AttachedFileCard(
-                title: 'My Resume',
-              ),
-              Container(
-                  margin: const EdgeInsets.only(top: 8, left: 10.0),
-                  child: const Row(
-                    children: [
-                      Text(
-                        'Published Opportunities',
-                        style: TextStyle(fontSize: 22, color: Colors.black),
-                      ),
-                    ],
-                  )),
-              ListView.separated(
-                shrinkWrap: true,
-                physics: const ClampingScrollPhysics(),
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return const JobCard(
-                    name:
-                        'Full Stack Developer Full Stack Developer Full Stack Developer',
-                    description: 'loram azsd asdiw fsdfds asdfa',
-                    location: 'Damascus',
-                    expiryDate: '10/10/2025',
-                    jobType: 'full time',
-                    isOnline: true,
-                  ).onTap(
-                    () => Get.toNamed(AppRoutes.jobDetailsPage),
-                  );
-                },
-                separatorBuilder: (context, index) =>
-                    const SizedBox(height: 10),
-              ).paddingSymmetric(horizontal: 10, vertical: 10),
-            ],
-          ),
-        ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Get.toNamed(AppRoutes.addFreeJobPage),
+        child: const Icon(Icons.add),
       ),
-    );
-  }
-
-  Widget _buildFirstSectionOfProfile() {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10.0, left: 10.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      body: ListView(
         children: [
-          CircleAvatar(
-            radius: 50,
-            backgroundImage:
-                AssetImage('assets/images/logo${Random().nextInt(3) + 1}.png'),
+          const ListTile(
+            leading: CircleAvatar(
+              radius: 32,
+              backgroundColor: Colors.blue,
+              child: Text(
+                'M',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20),
+              ),
+            ),
+            title: Text(
+              'my name',
+              style: TextStyle(
+                  fontSize: 22,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold),
+            ),
+            subtitle: Text(
+              'my specialization',
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.black,
+              ),
+            ),
           ),
-          const SizedBox(
-            width: 15,
-          ),
-          const Expanded(
+          CustomOutlineButton(
+            width: context.width,
+            text: 'Resume',
+            icon: Icons.attach_file_outlined,
+            padding: 0,
+            onPressed: () {
+              Get.toNamed(AppRoutes.pdfFilePage);
+            },
+          ).paddingSymmetric(horizontal: 10, vertical: 10),
+          const Text(
+            'Main Information',
+            style: TextStyle(fontSize: 22, color: Colors.black),
+          ).paddingSymmetric(horizontal: 10),
+          Container(
+            decoration: BoxDecoration(
+              color: AppColors.verLightBlue,
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: Colors.black54),
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(
-                  'my name',
-                  style: TextStyle(
-                      fontSize: 22,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  'my specialization',
+                const Text(
+                  'Age: 25',
                   style: TextStyle(
                     fontSize: 18,
-                    color: Colors.black,
                   ),
-                ),
+                ).paddingSymmetric(horizontal: 10, vertical: 8),
+                const Text(
+                  'Gender: Male',
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ).paddingSymmetric(horizontal: 10, vertical: 4),
+                const Text(
+                  'Nationality: Syrian',
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ).paddingSymmetric(horizontal: 10, vertical: 8),
+                const Text(
+                  'City: Daraa',
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ).paddingSymmetric(horizontal: 10, vertical: 8),
+                const Text(
+                  'Educational Level: Bachelor',
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ).paddingSymmetric(horizontal: 10, vertical: 8),
               ],
             ),
-          )
+          ).paddingSymmetric(horizontal: 10, vertical: 10),
+          const Text(
+            'Published Opportunities',
+            style: TextStyle(fontSize: 22, color: Colors.black),
+          ).paddingSymmetric(horizontal: 10),
+          ListView.separated(
+            shrinkWrap: true,
+            physics: const ClampingScrollPhysics(),
+            itemCount: 10,
+            itemBuilder: (context, index) {
+              return const JobCard(
+                name:
+                    'Full Stack Developer Full Stack Developer Full Stack Developer',
+                description: 'loram azsd asdiw fsdfds asdfa',
+                location: 'Damascus',
+                expiryDate: '10/10/2025',
+                jobType: 'full time',
+                isOnline: true,
+              ).onTap(
+                () => Get.toNamed(AppRoutes.jobDetailsPage),
+              );
+            },
+            separatorBuilder: (context, index) => const SizedBox(height: 10),
+          ).paddingSymmetric(horizontal: 10, vertical: 10),
         ],
       ),
     );

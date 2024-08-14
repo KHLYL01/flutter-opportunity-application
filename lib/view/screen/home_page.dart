@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:opportunity_app/controller/home_controller.dart';
 import 'package:opportunity_app/core/constants/app_routes.dart';
 import 'package:opportunity_app/core/extensions/widget_extension.dart';
+import 'package:opportunity_app/view/screen/search_delegate.dart';
 import 'package:opportunity_app/view/widget/company_card.dart';
 import 'package:opportunity_app/view/widget/job_card.dart';
 
@@ -24,7 +25,8 @@ class HomePage extends StatelessWidget {
         backgroundColor: Colors.white,
         leadingWidth: context.width - context.width / 6,
         leading: TextField(
-          onTap: () {},
+          onTap: () =>
+              showSearch(context: context, delegate: MySearchDelegate()),
           onChanged: (value) {},
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(vertical: 10.0),
@@ -42,8 +44,9 @@ class HomePage extends StatelessWidget {
               color: Colors.black87,
             ).paddingSymmetric(horizontal: 15.0),
             prefixIcon: IconButton(
-              onPressed: () =>
-                  controller.scaffoldState.currentState!.openDrawer(),
+              onPressed: () {
+                controller.scaffoldState.currentState!.openDrawer();
+              },
               icon: const Icon(
                 Icons.dehaze,
                 size: 25,
@@ -57,7 +60,9 @@ class HomePage extends StatelessWidget {
             Icons.notifications,
             color: Colors.black,
             size: 32,
-          ).paddingOnly(right: 20, top: 15, bottom: 10),
+          ).onTap(() {
+            Get.toNamed(AppRoutes.notificationsPage);
+          }).paddingOnly(right: 20, top: 15, bottom: 10),
         ],
       ),
       body: ListView(
