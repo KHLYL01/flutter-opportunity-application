@@ -43,6 +43,8 @@ class CustomTextField extends StatelessWidget {
               ),
             ).paddingOnly(bottom: 10),
             TextFormField(
+              minLines: 1,
+              maxLines: isSecret ? 1 : 10,
               controller: textEditingController,
               obscureText: isSecret ? controller.obscure : false,
               decoration: InputDecoration(

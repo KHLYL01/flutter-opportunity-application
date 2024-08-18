@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../controller/image_controller.dart';
+import '../../controller/shared/image_controller.dart';
 import '../constants/app_colors.dart';
 
 Future getImageUseBottomSheet(ImageController controller) {

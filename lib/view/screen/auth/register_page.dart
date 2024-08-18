@@ -72,11 +72,6 @@ class RegisterPage extends StatelessWidget {
                 ),
                 const CustomDropDown(
                   title: 'Role',
-                  currentSelected: 'USER',
-                  list: [
-                    'USER',
-                    'ADMIN',
-                  ],
                 ),
                 CustomTextField(
                   title: 'Phone Number',

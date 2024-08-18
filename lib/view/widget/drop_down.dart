@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:opportunity_app/controller/shared/drop_down_controller.dart';
+
 import '../../core/constants/app_colors.dart';
 
 class CustomDropDown extends StatelessWidget {
   const CustomDropDown({
     Key? key,
     required this.title,
-    required this.currentSelected,
-    required this.list,
+    this.onChange,
   }) : super(key: key);
 
   final String title;
-  final String currentSelected;
-  final List<String> list;
+  final ValueChanged<String?>? onChange;
 
   @override
   Widget build(BuildContext context) {
-    DropDownController controller =
-        Get.put(DropDownController(list, currentSelected), tag: title);
+    DropDownController controller = Get.find<DropDownController>(tag: title);
     return SizedBox(
       width: context.width,
       child: Column(
@@ -41,22 +39,25 @@ class CustomDropDown extends StatelessWidget {
               ),
             ),
             child: Obx(
-              () => DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  value: controller.currentSelected.value,
-                  items: list
-                      .map(
-                        (item) => DropdownMenuItem(
-                          value: item,
-                          child: Text(item),
-                        ),
-                      )
-                      .toList(),
-                  onChanged: (String? value) {
-                    controller.onChange(value!);
-                  },
-                ).paddingSymmetric(horizontal: 16),
-              ),
+              () {
+                return DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    value: controller.currentSelected.value,
+                    items: controller.list
+                        .map(
+                          (item) => DropdownMenuItem<String>(
+                            value: item,
+                            child: Text(item),
+                          ),
+                        )
+                        .toList(),
+                    onChanged: onChange ??
+                        (String? value) {
+                          controller.onChange(value!);
+                        },
+                  ).paddingSymmetric(horizontal: 16),
+                );
+              },
             ),
           ),
         ],

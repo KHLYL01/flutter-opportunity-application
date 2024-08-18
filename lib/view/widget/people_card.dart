@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:opportunity_app/core/constants/app_images.dart';
+import 'package:opportunity_app/link_api.dart';
 
 import '../../core/constants/app_colors.dart';
 
@@ -43,13 +43,20 @@ class PeopleCard extends StatelessWidget {
         minVerticalPadding: 0,
         minLeadingWidth: 0,
         leading: imageUrl == ''
-            ? const CircleAvatar(
+            ? CircleAvatar(
                 radius: 24,
-                backgroundImage: AssetImage(AppImages.splash),
+                child: Text(
+                  name[0],
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20),
+                ),
               )
             : CircleAvatar(
                 radius: 24,
-                backgroundImage: NetworkImage(imageUrl),
+                backgroundImage:
+                    NetworkImage("${AppLink.images}/image/$imageUrl"),
               ),
         trailing: const Icon(Icons.arrow_forward_ios).paddingOnly(right: 5),
       ).paddingAll(8),

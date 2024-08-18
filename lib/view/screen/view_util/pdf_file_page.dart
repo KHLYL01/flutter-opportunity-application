@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:opportunity_app/core/extensions/widget_extension.dart';
 import 'package:pdfx/pdfx.dart';
 
-import '../../controller/pdf_file_controller.dart';
+import '../../../controller/pdf_file_controller.dart';
 
 class PdfFilePage extends GetView<PdfFileController> {
   const PdfFilePage({Key? key}) : super(key: key);

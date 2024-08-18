@@ -12,17 +12,14 @@ class AppLink {
 
   // ======================= User & Admin ==========================
 
-  static const String users = '$baseUrl/users';
-  static const String courses = '$baseUrl/courses';
-  static const String groups = '$baseUrl/groups';
-  static const String parts = '$baseUrl/parts';
-  static const String lessons = '$baseUrl/lessons';
-  static const String files = '$baseUrl/files';
-  static const String quizzes = '$baseUrl/quizzes';
-  static const String items = '$baseUrl/items';
-  static const String attempts = '$baseUrl/attempts';
-  static const String notifications = '$baseUrl/notifications';
-  static const String partCodes = '$baseUrl/part-codes';
-  static const String activeCodes = '$baseUrl/actives';
-  static const String codes = '$baseUrl/codes';
+  static const String jobCategories = '$baseUrl/job_categories';
+  static const String jobSubCategories = '$baseUrl/job_sub_categories';
+  static const String freeCategories = '$baseUrl/free_categories';
+  static const String userProfile = '$baseUrl/profiles';
+  static const String images = '$baseUrl/images';
+  static const String freeJobs = '$baseUrl/free_opportunities';
+  static const String companyProfile = '$baseUrl/companies';
+  static const String jobs = '$baseUrl/jobs';
+  static const String applies = '$baseUrl/applies';
+  static const String reports = '$baseUrl/reports';
 }

@@ -11,7 +11,7 @@ class JobCard extends StatelessWidget {
     required this.location,
     required this.expiryDate,
     required this.jobType,
-    required this.isOnline,
+    required this.online,
   }) : super(key: key);
 
   final String name;
@@ -19,7 +19,7 @@ class JobCard extends StatelessWidget {
   final String location;
   final String expiryDate;
   final String jobType;
-  final bool isOnline;
+  final String online;
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +58,7 @@ class JobCard extends StatelessWidget {
                     color: Colors.grey.shade700,
                     borderRadius: BorderRadius.circular(4)),
                 child: Text(
-                  isOnline ? 'remotely' : 'at work', //'at work
+                  online, //'at work
                   style: const TextStyle(fontSize: 12, color: Colors.white),
                 ).paddingSymmetric(vertical: 4, horizontal: 8),
               ).paddingOnly(right: 4),

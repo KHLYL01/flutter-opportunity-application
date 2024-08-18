@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../core/functions/toast.dart';
+import '../../core/functions/toast.dart';
 
 class ImageController extends GetxController {
   var selectedImagePath = ''.obs;

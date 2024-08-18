@@ -3,8 +3,9 @@ class AppKeys {
   static const String refresh = 'refresh';
   static const String step = 'step';
   static const String id = 'id';
+  static const String profileId = 'profile_id';
   static const String name = 'name';
   static const String role = 'role';
   static const String phone = 'phone';
-  static const String emil = 'emil';
+  static const String email = 'emil';
 }

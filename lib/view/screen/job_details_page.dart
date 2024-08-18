@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:opportunity_app/controller/apply_controller.dart';
+import 'package:opportunity_app/controller/company_profile_controller.dart';
+import 'package:opportunity_app/controller/job_controller.dart';
+import 'package:opportunity_app/core/constants/app_keys.dart';
+import 'package:opportunity_app/core/constants/app_routes.dart';
+import 'package:opportunity_app/data/model/job_model.dart';
+import 'package:opportunity_app/link_api.dart';
 import 'package:opportunity_app/view/widget/fill_button.dart';
 
-import '../../core/constants/app_images.dart';
-
-class JopDetailsPage extends StatelessWidget {
+class JopDetailsPage extends GetView<ApplyControllerImp> {
   const JopDetailsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    JobModel jobModel = Get.arguments[0];
+    String? isFound = controller.checkIsFound(jobModel.id);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -29,30 +36,46 @@ class JopDetailsPage extends StatelessWidget {
       body: ListView(
         children: [
           ListTile(
-            title: const Text(
-              'Company Name',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            onTap: () {
+              Get.toNamed(AppRoutes.viewCompanyProfilePage);
+              Get.find<CompanyProfileControllerImp>()
+                  .getCompanyProfile(id: jobModel.companyId);
+              Get.find<JobControllerImp>()
+                  .getAllDataByCompanyUserId(id: jobModel.companyId);
+            },
+            title: Text(
+              jobModel.companyName,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            subtitle: const Text(
-              'Company Scope',
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            subtitle: Text(
+              jobModel.companyScope,
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
             ),
-            leading: '' == ''
-                ? const CircleAvatar(
+            leading: jobModel.companyImageUrl == ''
+                ? CircleAvatar(
                     radius: 24,
-                    backgroundImage: AssetImage(AppImages.splash),
+                    child: Text(
+                      jobModel.companyName[0],
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
                   )
-                : const CircleAvatar(
+                : CircleAvatar(
                     radius: 24,
-                    backgroundImage: NetworkImage('imageUrl'),
+                    backgroundImage: NetworkImage(
+                      "${AppLink.images}/image/${jobModel.companyImageUrl}",
+                    ),
                   ),
             trailing: Container(
               decoration: BoxDecoration(
                   color: Colors.grey.shade700,
                   borderRadius: BorderRadius.circular(4)),
-              child: const Text(
-                'job category',
-                style: TextStyle(fontSize: 12, color: Colors.white),
+              child: Text(
+                jobModel.jobSubCategoryName,
+                style: const TextStyle(fontSize: 12, color: Colors.white),
               ).paddingSymmetric(vertical: 4, horizontal: 8),
             ),
           ),
@@ -61,13 +84,15 @@ class JopDetailsPage extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Publish date: 15/10/2025',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                  Text(
+                    'Publish date: ${jobModel.createdDate.substring(0, 10)}',
+                    style: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.w700),
                   ).paddingSymmetric(horizontal: 16, vertical: 4),
-                  const Text(
-                    'Expiry date: 15/10/2025',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                  Text(
+                    'Expiry date: ${jobModel.expiryDate.substring(0, 10)}',
+                    style: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.w700),
                   ).paddingSymmetric(horizontal: 16, vertical: 4),
                 ],
               ),
@@ -76,9 +101,9 @@ class JopDetailsPage extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: Colors.grey.shade700,
                     borderRadius: BorderRadius.circular(4)),
-                child: const Text(
-                  'location',
-                  style: TextStyle(fontSize: 16, color: Colors.white),
+                child: Text(
+                  'location: ${jobModel.location.length > 12 ? '${jobModel.location.substring(0, 12)}...' : jobModel.location}',
+                  style: const TextStyle(fontSize: 16, color: Colors.white),
                 ).paddingSymmetric(vertical: 4, horizontal: 12),
               ).paddingOnly(right: 24),
             ],
@@ -87,14 +112,14 @@ class JopDetailsPage extends StatelessWidget {
             color: Colors.black,
             thickness: 1,
           ).paddingSymmetric(horizontal: 10),
-          const ListTile(
+          ListTile(
             title: Text(
-              'Job Title',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              jobModel.title,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             subtitle: Text(
-              'Job Description Job DescriptionJob DescriptionJob DescriptionJob DescriptionJob DescriptionJob DescriptionJob DescriptionJob DescriptionJob DescriptionJob DescriptionJob DescriptionJob DescriptionJob DescriptionJob DescriptionJob DescriptionJob DescriptionJob DescriptionJob DescriptionJob DescriptionJob DescriptionJob DescriptionJob DescriptionJob DescriptionJob DescriptionJob DescriptionJob DescriptionJob DescriptionJob DescriptionJob DescriptionJob Description',
-              style: TextStyle(
+              jobModel.description,
+              style: const TextStyle(
                 fontSize: 14,
               ),
             ),
@@ -107,53 +132,58 @@ class JopDetailsPage extends StatelessWidget {
             'Job Requirement',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ).paddingSymmetric(horizontal: 16, vertical: 4),
-          const Text(
-            'Job Type: Full Time',
-            style: TextStyle(
+          Text(
+            'Job Type: ${jobModel.jopType}',
+            style: const TextStyle(
               fontSize: 18,
             ),
           ).paddingSymmetric(horizontal: 16, vertical: 4),
-          const Text(
-            'Age: 22',
-            style: TextStyle(
+          Text(
+            'Age: ${jobModel.age == 0 ? 'any' : jobModel.age}',
+            style: const TextStyle(
               fontSize: 18,
             ),
           ).paddingSymmetric(horizontal: 16, vertical: 4),
-          const Text(
-            'Gender: Male',
-            style: TextStyle(
+          Text(
+            'Gender: ${jobModel.gender}',
+            style: const TextStyle(
               fontSize: 18,
             ),
           ).paddingSymmetric(horizontal: 16, vertical: 4),
-          const Text(
-            'nationality: Syrian',
-            style: TextStyle(
+          Text(
+            'Nationality: ${jobModel.nationality}',
+            style: const TextStyle(
               fontSize: 18,
             ),
           ).paddingSymmetric(horizontal: 16, vertical: 4),
-          const Text(
-            'experience: 2+ years',
-            style: TextStyle(
+          Text(
+            'Experience: ${jobModel.experience}',
+            style: const TextStyle(
               fontSize: 18,
             ),
           ).paddingSymmetric(horizontal: 16, vertical: 4),
-          const Text(
-            'Remotely: Yes',
-            style: TextStyle(
+          Text(
+            'Status: ${jobModel.online}',
+            style: const TextStyle(
               fontSize: 18,
             ),
           ).paddingSymmetric(horizontal: 16, vertical: 4),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              CustomFillButton(
-                width: context.width * .315,
-                text: 'Apply Now',
-                textFont: 20,
-                onPressed: () {},
-              ).paddingOnly(right: 16),
-            ],
-          ).paddingOnly(top: 10)
+          if (controller.myServices.getString(AppKeys.role) == 'USER')
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                CustomFillButton(
+                  width: context.width * .4,
+                  text: isFound ?? 'Apply Now',
+                  textFont: 20,
+                  onPressed: isFound != null
+                      ? null
+                      : () {
+                          controller.postDate(jobModel.id);
+                        },
+                ).paddingOnly(right: 16),
+              ],
+            ).paddingOnly(top: 10)
         ],
       ),
     );

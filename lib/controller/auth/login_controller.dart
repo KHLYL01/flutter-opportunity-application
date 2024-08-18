@@ -9,7 +9,7 @@ import '../../core/enums/status_request.dart';
 import '../../core/functions/custom_snack_bar.dart';
 import '../../core/functions/handling_data.dart';
 import '../../core/services/services.dart';
-import '../../data/remote/auth_data.dart';
+import '../../data/data_sources/remote/auth_data.dart';
 
 abstract class LoginController extends GetxController {
   login();
@@ -50,16 +50,16 @@ class LoginControllerImp extends LoginController {
         customSnackBar(
           title: 'Done',
           message: 'login successfully',
-          isDone: true,
         );
 
         myServices.saveString(AppKeys.token, response['token']);
         myServices.saveString(AppKeys.refresh, response['refreshToken']);
         myServices.saveString(AppKeys.name, response['name']);
-        myServices.saveString(AppKeys.emil, response['email']);
+        myServices.saveString(AppKeys.email, response['email']);
         myServices.saveString(AppKeys.phone, response['phoneNumber']);
         myServices.saveString(AppKeys.role, response['role']);
         myServices.saveInt(AppKeys.id, response['id']);
+        myServices.saveInt(AppKeys.profileId, response['profileId']);
         myServices.saveString(AppKeys.step, 'refresh');
 
         goToRefresh();

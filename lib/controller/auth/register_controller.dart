@@ -7,7 +7,7 @@ import 'package:opportunity_app/core/constants/app_routes.dart';
 import 'package:opportunity_app/core/enums/status_request.dart';
 import 'package:opportunity_app/core/functions/custom_snack_bar.dart';
 import 'package:opportunity_app/core/services/services.dart';
-import 'package:opportunity_app/data/remote/auth_data.dart';
+import '../../data/data_sources/remote/auth_data.dart';
 
 import '../../core/functions/handling_data.dart';
 
@@ -49,7 +49,6 @@ class RegisterControllerImp extends RegisterController {
         customSnackBar(
           title: 'Done',
           message: 'account register successfully',
-          isDone: true,
         );
         goToLogin();
         clearController();

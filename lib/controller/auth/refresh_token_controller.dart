@@ -7,7 +7,7 @@ import '../../core/constants/app_routes.dart';
 import '../../core/enums/status_request.dart';
 import '../../core/functions/handling_data.dart';
 import '../../core/services/services.dart';
-import '../../data/remote/auth_data.dart';
+import '../../data/data_sources/remote/auth_data.dart';
 
 abstract class RefreshTokenController extends GetxController {
   refreshToken();

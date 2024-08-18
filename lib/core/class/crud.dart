@@ -16,7 +16,6 @@ class Crud {
       String link, Map data) async {
     try {
       if (await checkInternet()) {
-        log('Start');
         var response = await http.post(
           Uri.parse(link),
           body: jsonEncode(data),
@@ -33,7 +32,6 @@ class Crud {
           } else {
             body = jsonDecode(response.body);
           }
-          log('crud');
           return Right(body);
         } else {
           return const Left(StatusRequest.serverFailure);
@@ -81,8 +79,8 @@ class Crud {
   Future<Either<StatusRequest, String>> postDataWithFile(
     String link,
     Map<String, String> data,
-    String keyPath,
-    String filePath,
+    List<String> keysPath,
+    List<String> filesPath,
   ) async {
     if (await checkInternet()) {
       var headers = {
@@ -90,14 +88,20 @@ class Crud {
         'Authorization': 'Bearer ${services.getToken()}',
       };
       var request = http.MultipartRequest('POST', Uri.parse(link));
-      request.files.add(await http.MultipartFile.fromPath(keyPath, filePath));
 
+      if (keysPath.isNotEmpty) {
+        for (int i = 0; i < filesPath.length; i++) {
+          request.files.add(
+              await http.MultipartFile.fromPath(keysPath[i], filesPath[i]));
+        }
+      }
       request.fields.addAll(data);
 
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
 
+      log(response.statusCode.toString());
       if (response.statusCode.toString() == '200' ||
           response.statusCode.toString() == '201') {
         return const Right("success");
@@ -112,12 +116,12 @@ class Crud {
   Future<Either<StatusRequest, Map>> getData(String link) async {
     try {
       if (await checkInternet()) {
-        log('crud');
         var headers = {'Authorization': 'Bearer ${services.getToken()}'};
         var response = await http.get(Uri.parse(link), headers: headers);
+        log(response.statusCode.toString());
         if (response.statusCode == 200 || response.statusCode == 201) {
           Map<String, dynamic> body = jsonDecode(response.body);
-          log('crud =====1====');
+          log(body.toString());
           return Right(body);
         } else {
           log(response.reasonPhrase.toString());
@@ -135,13 +139,11 @@ class Crud {
   Future<Either<StatusRequest, List>> getAllData(String link) async {
     try {
       if (await checkInternet()) {
-        // log('crud ${services.getToken()}');
         var headers = {
           'Authorization': 'Bearer ${services.getToken()}',
         };
         var response = await http.get(Uri.parse(link), headers: headers);
         log(response.statusCode.toString());
-
         if (response.statusCode == 200 || response.statusCode == 201) {
           List<dynamic> body = jsonDecode(response.body);
           log(body.toString());
@@ -162,9 +164,10 @@ class Crud {
   Future<Either<StatusRequest, String>> deleteData(String link) async {
     try {
       if (await checkInternet()) {
-        log('crud');
         var headers = {'Authorization': 'Bearer ${services.getToken()}'};
         var response = await http.delete(Uri.parse(link), headers: headers);
+        log(response.statusCode.toString());
+
         if (response.statusCode == 204 || response.statusCode == 200) {
           return const Right("delete successfully");
         } else {
@@ -184,19 +187,19 @@ class Crud {
       {Map? data}) async {
     try {
       if (await checkInternet()) {
-        log('crud');
         var headers = {
           "Content-Type": "application/json",
           "Accept": "application/json",
           'Authorization': 'Bearer ${services.getToken()}'
         };
+
         var response = await http.put(Uri.parse(link),
             body: data != null ? jsonEncode(data) : null, headers: headers);
+        log(response.statusCode.toString());
+
         if (response.statusCode == 200 ||
             response.statusCode == 201 ||
             response.statusCode == 204) {
-          // Map<String, dynamic> body = jsonDecode(response.body);
-          // log('crud =====1====');
           return const Right("update successfully");
         } else {
           log(response.reasonPhrase.toString());

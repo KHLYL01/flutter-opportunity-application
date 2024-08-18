@@ -12,12 +12,12 @@ class ViewHandle extends StatelessWidget {
     Key? key,
     required this.widget,
     required this.statusRequest,
-    required this.onPressed,
+    this.onPressed,
   }) : super(key: key);
 
   final Widget widget;
   final StatusRequest statusRequest;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {

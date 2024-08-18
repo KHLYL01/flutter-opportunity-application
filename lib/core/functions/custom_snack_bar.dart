@@ -6,7 +6,7 @@ import '../constants/app_colors.dart';
 customSnackBar({
   required String title,
   required String message,
-  required bool isDone,
+  bool isDone = true,
 }) {
   return Get.showSnackbar(
     GetSnackBar(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:opportunity_app/core/constants/app_images.dart';
+import 'package:opportunity_app/link_api.dart';
 
 import '../../core/constants/app_colors.dart';
 
@@ -50,7 +51,8 @@ class CompanyCard extends StatelessWidget {
                   )
                 : CircleAvatar(
                     radius: 24,
-                    backgroundImage: NetworkImage(imageUrl),
+                    backgroundImage:
+                        NetworkImage('${AppLink.images}/image/$imageUrl'),
                   ),
           ),
           Text(
