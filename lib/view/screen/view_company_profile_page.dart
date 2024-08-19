@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:opportunity_app/controller/company_profile_controller.dart';
+import 'package:opportunity_app/controller/rate_controller.dart';
 import 'package:opportunity_app/controller/report_controller.dart';
 import 'package:opportunity_app/core/constants/app_colors.dart';
 import 'package:opportunity_app/core/constants/app_keys.dart';
@@ -118,9 +119,15 @@ class ViewCompanyProfilePage extends StatelessWidget {
                     color: AppColors.myDarkBlue,
                     size: 32,
                   ),
-                  Text(
-                    controller.companyProfile.totalRate.toString(),
-                    style: const TextStyle(fontSize: 16, color: Colors.black),
+                  Obx(
+                    () => Text(
+                      Get.find<RateControllerImp>()
+                          .rate
+                          .value
+                          .toString()
+                          .substring(0, 3),
+                      style: const TextStyle(fontSize: 16, color: Colors.black),
+                    ),
                   ),
                   const SizedBox(
                     height: 27,
@@ -128,9 +135,11 @@ class ViewCompanyProfilePage extends StatelessWidget {
                       color: Colors.black,
                     ),
                   ),
-                  Text(
-                    controller.companyProfile.reviewCount.toString(),
-                    style: const TextStyle(fontSize: 16, color: Colors.black),
+                  Obx(
+                    () => Text(
+                      Get.find<RateControllerImp>().review.value.toString(),
+                      style: const TextStyle(fontSize: 16, color: Colors.black),
+                    ),
                   ),
                   const Text(
                     'Reviews',
@@ -139,19 +148,22 @@ class ViewCompanyProfilePage extends StatelessWidget {
                   const SizedBox(
                     width: 10,
                   ),
-                  RatingBar(
-                    initialRating: controller.companyProfile.totalRate,
-                    ratingWidget: RatingWidget(
-                      full: const Icon(Icons.star_rate_rounded,
-                          color: AppColors.myDarkBlue),
-                      half: const Icon(Icons.star_rate_rounded,
-                          color: AppColors.myDarkBlue),
-                      empty: Icon(Icons.star_border_rounded,
-                          color: Colors.grey.shade300),
+                  Obx(
+                    () => RatingBar(
+                      initialRating: Get.find<RateControllerImp>().rate.value,
+                      allowHalfRating: true,
+                      ratingWidget: RatingWidget(
+                        full: const Icon(Icons.star_rate_rounded,
+                            color: AppColors.myDarkBlue),
+                        half: const Icon(Icons.star_rate_rounded,
+                            color: AppColors.myDarkBlue),
+                        empty: Icon(Icons.star_border_rounded,
+                            color: Colors.grey.shade300),
+                      ),
+                      onRatingUpdate: (value) {},
+                      ignoreGestures: true,
+                      // starOffColor: Colors.white,
                     ),
-                    onRatingUpdate: (value) {},
-                    ignoreGestures: true,
-                    // starOffColor: Colors.white,
                   ),
                 ],
               ).onTap(() {
@@ -165,7 +177,8 @@ class ViewCompanyProfilePage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           RatingBar(
-                            initialRating: controller.rateValue.value,
+                            initialRating:
+                                Get.find<RateControllerImp>().rate.value,
                             ratingWidget: RatingWidget(
                               full: const Icon(Icons.star_rate_rounded,
                                   color: AppColors.myDarkBlue),
@@ -176,14 +189,26 @@ class ViewCompanyProfilePage extends StatelessWidget {
                             ),
                             onRatingUpdate: (value) {
                               log(value.toString());
-                              controller.rateValue.value = value;
+                              Get.find<RateControllerImp>().rate.value = value;
                             },
                             // starOffColor: Colors.white,
                           ),
                           CustomFillButton(
                             width: 100,
                             text: 'Rate',
-                            onPressed: () {},
+                            onPressed: () {
+                              if (Get.find<RateControllerImp>().checkRate(
+                                      controller.companyProfile.id) !=
+                                  null) {
+                                Get.find<RateControllerImp>().updateDate(
+                                    Get.find<RateControllerImp>().checkRate(
+                                        controller.companyProfile.id),
+                                    controller.companyProfile.id);
+                              } else {
+                                Get.find<RateControllerImp>()
+                                    .postDate(controller.companyProfile.id);
+                              }
+                            },
                           )
                         ],
                       ),
@@ -220,7 +245,10 @@ class ViewCompanyProfilePage extends StatelessWidget {
                             jobType: item.jopType,
                             online: item.online,
                           ).onTap(
-                            () => Get.toNamed(AppRoutes.jobDetailsPage),
+                            () {
+                              Get.find<JobControllerImp>().getDataById(item.id);
+                              Get.toNamed(AppRoutes.jobDetailsPage);
+                            },
                           );
                         },
                         separatorBuilder: (context, index) =>

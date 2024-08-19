@@ -15,6 +15,7 @@ import '../core/functions/custom_snack_bar.dart';
 abstract class ReportController extends GetxController {
   getAllData();
   getAllDataByUserProfileId();
+  getAllDataByCompanyProfileId(int id);
   postDate(int companyProfileId);
   deleteDate(int id);
 }
@@ -44,24 +45,26 @@ class ReportControllerImp extends ReportController {
             .getAllDateByUserProfileId(myServices.getInt(AppKeys.profileId)),
         CrudStatus.get);
   }
-  //
-  // @override
-  // getAllData() async {
-  //   _crudDate(await reportData.getAllDate(), CrudStatus.get);
-  // }
+
+  @override
+  getAllDataByCompanyProfileId(int id) async {
+    _crudDate(
+        await reportData.getAllDateByCompanyProfileId(id), CrudStatus.get);
+  }
 
   @override
   postDate(int companyProfileId) async {
     if (formState.currentState!.validate()) {
       await _crudDate(
-          await reportData.postDate(
-            companyProfileId: companyProfileId,
-            userProfileId: myServices.getInt(AppKeys.profileId),
-            cause: cause.text,
-            details: details.text,
-            imagePath: Get.find<ImageController>().selectedImagePath.value,
-          ),
-          CrudStatus.post);
+        await reportData.postDate(
+          companyProfileId: companyProfileId,
+          userProfileId: myServices.getInt(AppKeys.profileId),
+          cause: cause.text,
+          details: details.text,
+          imagePath: Get.find<ImageController>().selectedImagePath.value,
+        ),
+        CrudStatus.post,
+      );
     }
   }
 
@@ -84,7 +87,7 @@ class ReportControllerImp extends ReportController {
         case CrudStatus.get:
           {
             reports = ReportModel.map(response);
-            customSnackBar(title: 'Done', message: 'Fetch Data Successfully');
+            // customSnackBar(title: 'Done', message: 'Fetch Data Successfully');
           }
         case CrudStatus.post || CrudStatus.update || CrudStatus.delete:
           {
@@ -123,5 +126,15 @@ class ReportControllerImp extends ReportController {
       }
     }
     return false;
+  }
+
+  int getSumOfReport(int companyProfileId) {
+    int sum = 0;
+    for (ReportModel reportModel in reports) {
+      if (reportModel.companyProfileId == companyProfileId) {
+        sum++;
+      }
+    }
+    return sum;
   }
 }

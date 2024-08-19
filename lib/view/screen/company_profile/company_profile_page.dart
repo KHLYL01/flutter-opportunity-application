@@ -7,6 +7,7 @@ import 'package:opportunity_app/core/class/view_handle.dart';
 import 'package:opportunity_app/core/constants/app_colors.dart';
 import 'package:opportunity_app/core/extensions/widget_extension.dart';
 
+import '../../../controller/rate_controller.dart';
 import '../../../core/constants/app_routes.dart';
 import '../../../core/enums/status_request.dart';
 import '../../../link_api.dart';
@@ -120,9 +121,15 @@ class CompanyProfilePage extends StatelessWidget {
                     color: AppColors.myDarkBlue,
                     size: 32,
                   ),
-                  Text(
-                    controller.companyProfile.totalRate.toString(),
-                    style: const TextStyle(fontSize: 16, color: Colors.black),
+                  Obx(
+                    () => Text(
+                      Get.find<RateControllerImp>()
+                          .rate
+                          .value
+                          .toString()
+                          .substring(0, 3),
+                      style: const TextStyle(fontSize: 16, color: Colors.black),
+                    ),
                   ),
                   const SizedBox(
                     height: 27,
@@ -130,9 +137,11 @@ class CompanyProfilePage extends StatelessWidget {
                       color: Colors.black,
                     ),
                   ),
-                  Text(
-                    controller.companyProfile.reviewCount.toString(),
-                    style: const TextStyle(fontSize: 16, color: Colors.black),
+                  Obx(
+                    () => Text(
+                      Get.find<RateControllerImp>().review.value.toString(),
+                      style: const TextStyle(fontSize: 16, color: Colors.black),
+                    ),
                   ),
                   const Text(
                     'Reviews',
@@ -141,19 +150,22 @@ class CompanyProfilePage extends StatelessWidget {
                   const SizedBox(
                     width: 10,
                   ),
-                  RatingBar(
-                    initialRating: controller.companyProfile.totalRate,
-                    ratingWidget: RatingWidget(
-                      full: const Icon(Icons.star_rate_rounded,
-                          color: AppColors.myDarkBlue),
-                      half: const Icon(Icons.star_rate_rounded,
-                          color: AppColors.myDarkBlue),
-                      empty: Icon(Icons.star_border_rounded,
-                          color: Colors.grey.shade300),
+                  Obx(
+                    () => RatingBar(
+                      initialRating: Get.find<RateControllerImp>().rate.value,
+                      allowHalfRating: true,
+                      ratingWidget: RatingWidget(
+                        full: const Icon(Icons.star_rate_rounded,
+                            color: AppColors.myDarkBlue),
+                        half: const Icon(Icons.star_rate_rounded,
+                            color: AppColors.myDarkBlue),
+                        empty: Icon(Icons.star_border_rounded,
+                            color: Colors.grey.shade300),
+                      ),
+                      onRatingUpdate: (value) {},
+                      ignoreGestures: true,
+                      // starOffColor: Colors.white,
                     ),
-                    onRatingUpdate: (value) {},
-                    ignoreGestures: true,
-                    // starOffColor: Colors.white,
                   ),
                 ],
               ).paddingSymmetric(horizontal: 16),
@@ -186,7 +198,10 @@ class CompanyProfilePage extends StatelessWidget {
                             jobType: item.jopType,
                             online: item.online,
                           ).onTap(
-                            () => Get.toNamed(AppRoutes.jobDetailsPage),
+                            () {
+                              Get.find<JobControllerImp>().getDataById(item.id);
+                              Get.toNamed(AppRoutes.jobDetailsPage);
+                            },
                           );
                         },
                         separatorBuilder: (context, index) =>

@@ -13,8 +13,8 @@ class JobModel {
   final String online;
   final int companyId;
   final String companyName;
-  final String companyScope;
-  final String companyImageUrl;
+  final String? companyScope;
+  final String? companyImageUrl;
   final String createdDate;
 
   JobModel({
@@ -48,14 +48,14 @@ class JobModel {
       jopType: '',
       experience: '',
       location: '',
-      expiryDate: '',
+      expiryDate: '00000000000',
       jobSubCategoryName: '',
       online: '',
       companyId: 0,
       companyName: '',
       companyScope: '',
       companyImageUrl: '',
-      createdDate: '',
+      createdDate: '00000000000',
     );
   }
 

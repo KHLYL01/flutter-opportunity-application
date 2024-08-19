@@ -43,4 +43,18 @@ class AuthData {
     return response.fold((l) => l, (r) => r);
   }
 
+  userData() async {
+    var response = await crud.getAllData(AppLink.admin);
+    return response.fold((l) => l, (r) => r);
+  }
+
+  updateUserData(int id) async {
+    var response = await crud.updateData("${AppLink.admin}/$id");
+    return response.fold((l) => l, (r) => r);
+  }
+
+  deleteUserData(int id) async {
+    var response = await crud.deleteData("${AppLink.admin}/$id");
+    return response.fold((l) => l, (r) => r);
+  }
 }

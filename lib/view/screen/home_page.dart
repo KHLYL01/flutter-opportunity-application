@@ -7,11 +7,14 @@ import 'package:opportunity_app/controller/user_profile_controller.dart';
 import 'package:opportunity_app/core/class/view_handle.dart';
 import 'package:opportunity_app/core/constants/app_routes.dart';
 import 'package:opportunity_app/core/extensions/widget_extension.dart';
-import 'package:opportunity_app/view/screen/search_delegate.dart';
+import 'package:opportunity_app/view/screen/view_util/search_delegate.dart';
 import 'package:opportunity_app/view/widget/company_card.dart';
 import 'package:opportunity_app/view/widget/job_card.dart';
 
+import '../../controller/category_controller.dart';
 import '../../controller/free_job_controller.dart';
+import '../../controller/rate_controller.dart';
+import '../../controller/shared/drop_down_controller.dart';
 import '../widget/custom_drawer_widget.dart';
 import '../widget/people_card.dart';
 
@@ -31,8 +34,15 @@ class HomePage extends StatelessWidget {
         backgroundColor: Colors.white,
         leadingWidth: context.width - context.width / 6,
         leading: TextField(
-          onTap: () =>
-              showSearch(context: context, delegate: MySearchDelegate()),
+          onTap: () {
+            Get.put(
+              DropDownController(
+                  Get.find<JobCategoryControllerImp>().getJobCategoryName(),
+                  '...'),
+              tag: 'Search Category',
+            );
+            showSearch(context: context, delegate: MySearchDelegate());
+          },
           onChanged: (value) {},
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(vertical: 10.0),
@@ -96,10 +106,10 @@ class HomePage extends StatelessWidget {
                       jobType: item.jopType,
                       online: item.online,
                     ).onTap(
-                      () => Get.toNamed(
-                        AppRoutes.jobDetailsPage,
-                        arguments: [item],
-                      ),
+                      () {
+                        Get.find<JobControllerImp>().getDataById(item.id);
+                        Get.toNamed(AppRoutes.jobDetailsPage);
+                      },
                     );
                   },
                   separatorBuilder: (context, index) =>
@@ -125,6 +135,8 @@ class HomePage extends StatelessWidget {
                       totalRate: item.totalRate,
                     ).onTap(
                       () {
+                        Get.find<RateControllerImp>()
+                            .getAllDataByCompanyProfileId(id: item.id);
                         Get.toNamed(AppRoutes.viewCompanyProfilePage);
                         Get.find<CompanyProfileControllerImp>()
                             .getCompanyProfile(id: item.id);

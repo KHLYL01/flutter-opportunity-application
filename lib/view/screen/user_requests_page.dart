@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:opportunity_app/core/class/view_handle.dart';
+import 'package:opportunity_app/core/constants/app_routes.dart';
+import 'package:opportunity_app/core/extensions/widget_extension.dart';
 import 'package:opportunity_app/data/model/apply_model.dart';
 
 import '../../controller/apply_controller.dart';
+import '../../controller/job_controller.dart';
 import '../../link_api.dart';
 
 class UserRequestPage extends StatelessWidget {
@@ -62,26 +65,13 @@ class UserRequestPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    // const SizedBox(height: 50.0),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    //   children: [
-                    //     CustomFillButton(
-                    //       fillColor: AppColors.myDarkBlue,
-                    //       width: 100,
-                    //       text: 'Accept',
-                    //       onPressed: () {},
-                    //     ),
-                    //     CustomFillButton(
-                    //       fillColor: AppColors.heavyRed,
-                    //       width: 100,
-                    //       text: 'Decline',
-                    //       onPressed: () {},
-                    //     )
-                    //   ],
-                    // ),
                   ],
                 ).paddingSymmetric(vertical: 16),
+              ).onTap(
+                () {
+                  Get.find<JobControllerImp>().getDataById(item.jobId);
+                  Get.toNamed(AppRoutes.jobDetailsPage);
+                },
               ).paddingSymmetric(horizontal: 16, vertical: 4);
             },
           ),

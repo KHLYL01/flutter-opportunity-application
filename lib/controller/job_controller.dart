@@ -20,6 +20,7 @@ import '../data/model/job_model.dart';
 abstract class JobController extends GetxController {
   toUpdateData(JobModel model);
   getAllData();
+  getDataById(int id);
   getAllDataByCompanyUserId();
   postDate();
   updateDate();
@@ -35,6 +36,8 @@ class JobControllerImp extends JobController {
   late DateTime expiryDate;
 
   List<JobModel> jobs = [];
+
+  JobModel jobModel = JobModel.zero();
 
   int get length => jobs.length;
 
@@ -57,6 +60,25 @@ class JobControllerImp extends JobController {
   @override
   getAllData() async {
     _crudDate(await jobData.getAllData(), CrudStatus.get);
+  }
+
+  @override
+  getDataById(int id) async {
+    statusRequest = StatusRequest.loading;
+    update();
+
+    var response = await jobData.getDataById(
+      id: id,
+    );
+
+    statusRequest = handlingData(response);
+    if (statusRequest == StatusRequest.success) {
+      jobModel = JobModel.fromJson(response);
+      // customSnackBar(title: 'Done', message: 'Fetch Data Successfully');
+    } else {
+      customSnackBar(title: 'Error', message: 'Not Found 404', isDone: false);
+    }
+    update();
   }
 
   @override

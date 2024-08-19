@@ -26,8 +26,6 @@ class CompanyProfileControllerImp extends CompanyProfileController {
   StatusRequest statusRequest = StatusRequest.none;
   MyServices myServices = Get.find();
 
-  RxDouble rateValue = 0.0.obs;
-
   @override
   toUpdateProfile() {
     scope.text = companyProfile.scope ?? '';

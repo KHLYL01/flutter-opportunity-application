@@ -50,7 +50,12 @@ class RegisterControllerImp extends RegisterController {
           title: 'Done',
           message: 'account register successfully',
         );
-        goToLogin();
+        if (Get.find<DropDownController>(tag: 'Role').currentSelected.value ==
+            'COMPANY') {
+          Get.offNamed(AppRoutes.waitingPage);
+        } else {
+          goToLogin();
+        }
         clearController();
       } else {
         statusRequest.value = StatusRequest.failure;

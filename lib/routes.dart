@@ -16,6 +16,8 @@ import 'bindings/user_request_bindings.dart';
 import 'core/middleware/middleware.dart';
 import 'bindings/job_sub_category_bindings.dart';
 import 'core/constants/app_routes.dart';
+import 'view/screen/admin_company_request_page.dart';
+import 'view/screen/auth/waiting_page.dart';
 import 'view/screen/company_profile/add_job_page.dart';
 import 'view/screen/company_requests_page.dart';
 import 'view/screen/user_requests_page.dart';
@@ -82,6 +84,11 @@ List<GetPage<dynamic>> routes = [
     name: AppRoutes.refreshPage,
     page: () => const RefreshTokenPage(),
     binding: RefreshTokenBindings(),
+  ),
+
+  GetPage(
+    name: AppRoutes.waitingPage,
+    page: () => const WaitingPage(),
   ),
 
   ///
@@ -204,12 +211,30 @@ List<GetPage<dynamic>> routes = [
   ),
 
   ///
-  /// Notification File ===============================
+  /// Notification ===============================
   ///
 
   GetPage(
     name: AppRoutes.notificationsPage,
     page: () => const NotificationsPage(),
+  ),
+
+  ///
+  ///  Report ===============================
+  ///
+
+  GetPage(
+    name: AppRoutes.reportPage,
+    page: () => const ReportPage(),
+  ),
+  GetPage(
+    name: AppRoutes.addReportPage,
+    page: () => const AddReportPage(),
+    binding: AddReportBindings(),
+  ),
+  GetPage(
+    name: AppRoutes.companyReportPage,
+    page: () => const CompanyReportPage(),
   ),
 
   GetPage(
@@ -229,16 +254,7 @@ List<GetPage<dynamic>> routes = [
   ),
 
   GetPage(
-    name: AppRoutes.reportPage,
-    page: () => const ReportPage(),
-  ),
-  GetPage(
-    name: AppRoutes.addReportPage,
-    page: () => const AddReportPage(),
-    binding: AddReportBindings(),
-  ),
-  GetPage(
-    name: AppRoutes.companiesReportedPage,
-    page: () => const CompaniesReportedPage(),
+    name: AppRoutes.adminCompanyRequestPage,
+    page: () => const AdminCompanyRequestPage(),
   ),
 ];

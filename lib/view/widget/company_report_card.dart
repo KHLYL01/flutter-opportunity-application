@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:opportunity_app/core/extensions/widget_extension.dart';
 
-import '../../data/data_sources/static/company_reported_model.dart';
+import '../../link_api.dart';
 
 class CompanyReportCard extends StatelessWidget {
   const CompanyReportCard({
     super.key,
-    required this.company,
+    required this.companyName,
+    required this.companyScope,
+    required this.companyImageUrl,
+    required this.reportCount,
   });
 
-  final CompanyReportedModel company;
+  final String companyName;
+  final String? companyScope;
+  final String? companyImageUrl;
+  final int reportCount;
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +32,31 @@ class CompanyReportCard extends StatelessWidget {
         ],
       ),
       child: ListTile(
-        title: Text(company.name),
-        trailing: Text('${company.reportCount} reports'),
+        title: Text(companyName),
+        subtitle: Text(companyScope ?? '...'),
+        leading: CircleAvatar(
+          radius: 32,
+          backgroundColor: Colors.blue,
+          backgroundImage: companyImageUrl != null
+              ? NetworkImage(
+                  '${AppLink.images}/image/${companyImageUrl!}',
+                )
+              : null,
+          child: companyImageUrl == null
+              ? Text(
+                  companyName == '' ? ' ' : companyName[0],
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20),
+                )
+              : null,
+        ),
+        trailing: Text(
+          '$reportCount reports',
+          style: const TextStyle(fontSize: 14),
+        ),
       ),
-    ).marginSymmetric(vertical: 8, horizontal: 16).onTap(() {
-      Get.toNamed('/report_page');
-    });
+    ).paddingSymmetric(vertical: 8, horizontal: 16);
   }
 }

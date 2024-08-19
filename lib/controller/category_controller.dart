@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:opportunity_app/core/constants/app_routes.dart';
@@ -116,6 +118,7 @@ class JobCategoryControllerImp extends JobCategoryController {
     for (JobCategoryModel categoryModel in categories) {
       list.add(categoryModel.name);
     }
+    log('main Category: $list');
     return list;
   }
 

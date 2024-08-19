@@ -10,6 +10,52 @@ class JobData {
     return response.fold((l) => l, (r) => r);
   }
 
+  getDataById({required int id}) async {
+    var response = await crud.getData("${AppLink.jobs}/$id");
+    return response.fold((l) => l, (r) => r);
+  }
+
+  search({
+    required String title,
+    required String nationality,
+    required String gender,
+    required String jopType,
+    required String experience,
+    required String online,
+    required String jobCategoryName,
+  }) async {
+    //search?title=uf&gender=...&online=Remotely
+    String query = '';
+    if (title != '') {
+      query += 'title=$title';
+    }
+    if (nationality != '...') {
+      query += 'nationality=$nationality';
+    }
+    if (gender != '...') {
+      query += 'gender=$gender';
+    }
+    if (jopType != '...') {
+      query += 'jopType=$jopType';
+    }
+    if (experience != '...') {
+      query += 'experience=$experience';
+    }
+    if (online != '...') {
+      query += 'online=$online';
+    }
+    if (jobCategoryName != '...') {
+      query += 'jobCategoryName=$jobCategoryName';
+    }
+
+    if (query != '') {
+      query = "?$query";
+    }
+
+    var response = await crud.getAllData("${AppLink.jobs}/search$query");
+    return response.fold((l) => l, (r) => r);
+  }
+
   getAllDateByCompanyProfileId(int id) async {
     var response = await crud.getAllData("${AppLink.jobs}/companyProfile/$id");
     return response.fold((l) => l, (r) => r);

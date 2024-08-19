@@ -11,6 +11,7 @@ class AppLink {
   static const String refreshToken = '$baseAuth/refresh';
 
   // ======================= User & Admin ==========================
+  static const String admin = '$baseUrl/admins';
 
   static const String jobCategories = '$baseUrl/job_categories';
   static const String jobSubCategories = '$baseUrl/job_sub_categories';
@@ -22,4 +23,5 @@ class AppLink {
   static const String jobs = '$baseUrl/jobs';
   static const String applies = '$baseUrl/applies';
   static const String reports = '$baseUrl/reports';
+  static const String rates = '$baseUrl/rates';
 }

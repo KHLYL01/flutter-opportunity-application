@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:opportunity_app/controller/home_controller.dart';
+import 'package:opportunity_app/controller/rate_controller.dart';
 import 'package:opportunity_app/controller/report_controller.dart';
 import 'package:opportunity_app/core/constants/app_keys.dart';
 import 'package:opportunity_app/core/constants/app_routes.dart';
@@ -71,9 +73,10 @@ class CustomDrawerWidget extends StatelessWidget {
             ListTile(
               onTap: () {
                 Scaffold.of(context).closeDrawer();
+                Get.find<RateControllerImp>().getAllDataByCompanyProfileId();
                 Get.toNamed(AppRoutes.companyProfilePage);
               },
-              title: const Text("My company Profile"),
+              title: const Text("My Company Profile"),
               leading: Icon(
                 MdiIcons.account,
               ),
@@ -95,7 +98,20 @@ class CustomDrawerWidget extends StatelessWidget {
             ListTile(
               onTap: () {
                 Scaffold.of(context).closeDrawer();
-                Get.toNamed(AppRoutes.reportPage);
+                Get.toNamed(AppRoutes.adminCompanyRequestPage);
+                Get.find<HomeControllerImp>().getAllCompanyRequest();
+              },
+              title: const Text("Authentication Requests"),
+              leading: Icon(
+                MdiIcons.account,
+              ),
+              minLeadingWidth: 10,
+            ),
+          if (myServices.getString(AppKeys.role) == 'ADMIN')
+            ListTile(
+              onTap: () {
+                Scaffold.of(context).closeDrawer();
+                Get.toNamed(AppRoutes.companyReportPage);
                 Get.find<ReportControllerImp>().getAllData();
               },
               title: const Text("Reports"),

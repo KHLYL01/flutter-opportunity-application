@@ -2,15 +2,17 @@ class ReportModel {
   final int id;
   final int companyProfileId;
   final int userProfileId;
+  final String userProfileName;
   final String cause;
   final String details;
-  final String imageUrl;
+  final String? imageUrl;
   final String createdDate;
 
   ReportModel({
     required this.id,
     required this.companyProfileId,
     required this.userProfileId,
+    required this.userProfileName,
     required this.cause,
     required this.details,
     required this.imageUrl,
@@ -22,6 +24,7 @@ class ReportModel {
       id: 0,
       companyProfileId: 0,
       userProfileId: 0,
+      userProfileName: '',
       cause: '',
       details: '',
       imageUrl: '',
@@ -34,6 +37,7 @@ class ReportModel {
       id: json['id'],
       companyProfileId: json['companyProfileId'],
       userProfileId: json['userProfile']['id'],
+      userProfileName: json['userProfile']['user']['name'],
       cause: json['cause'],
       details: json['details'],
       imageUrl: json['imageUrl'],

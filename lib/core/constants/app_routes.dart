@@ -4,6 +4,7 @@ class AppRoutes {
   static const String registerPage = '/register';
   static const String loginPage = '/login';
   static const String refreshPage = '/refresh';
+  static const String waitingPage = '/waiting';
   static const String homePage = '/home';
   static const String jobDetailsPage = '/job_details';
   static const String companyProfilePage = '/company_profile';
@@ -18,6 +19,7 @@ class AppRoutes {
   static const String addFreeJobPage = '/add_free_job';
   static const String userRequestPage = '/user_request';
   static const String companyRequestPage = '/company_request';
+  static const String adminCompanyRequestPage = '/admin_company_request';
 
   static const String categoryPage = '/category';
   static const String addCategoryPage = '/add_category';
@@ -33,5 +35,5 @@ class AppRoutes {
 
   static const String addReportPage = '/add_report';
   static const String reportPage = '/report_page';
-  static const String companiesReportedPage = '/companies_reported';
+  static const String companyReportPage = '/companies_reported';
 }
